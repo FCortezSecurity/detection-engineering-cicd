@@ -1,0 +1,85 @@
+<!-- Local rules -->
+<!-- Modify it at your will. -->
+<!-- Copyright (C) 2015, Wazuh Inc. -->
+
+<group name="local,syslog,sshd,">
+  <rule id="100001" level="5">
+    <if_sid>5716</if_sid>
+    <srcip>1.1.1.1</srcip>
+    <description>sshd: authentication failed from IP 1.1.1.1.</description>
+    <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,</group>
+  </rule>
+</group>
+
+<!-- Custom Detection Engineering Rules -->
+
+<!-- T1059.001 - PowerShell Spawning PowerShell -->
+<group name="attack,execution,mitre_t1059,detection_engineering,">
+  <rule id="100004" level="12">
+    <if_sid>92027</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)powershell\.exe</field>
+    <description>MITRE T1059.001 - Suspicious PowerShell process spawned</description>
+    <mitre>
+      <id>T1059.001</id>
+    </mitre>
+  </rule>
+</group>
+
+<!-- T1057 - Process Discovery via tasklist/wmic -->
+<group name="attack,discovery,mitre_t1057,detection_engineering,">
+  <rule id="100002" level="10">
+    <if_sid>92027,92031,92032,92034</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)(tasklist|wmic|net\.exe)$</field>
+    <description>MITRE T1057 - Process Discovery tool executed</description>
+    <mitre>
+      <id>T1057</id>
+    </mitre>
+  </rule>
+</group>
+
+<!-- T1053.005 - Scheduled Task -->
+<group name="attack,persistence,mitre_t1053,detection_engineering,">
+  <rule id="100003" level="12">
+    <if_sid>92027,92031,92032,92034</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)schtasks\.exe$</field>
+    <description>MITRE T1053.005 - Scheduled Task created for persistence</description>
+    <mitre>
+      <id>T1053.005</id>
+    </mitre>
+  </rule>
+</group>
+
+<!-- T1082 - System Information Discovery -->
+<group name="attack,discovery,mitre_t1082,detection_engineering,">
+  <rule id="100006" level="8">
+    <if_sid>92027,92031,92032,92034</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)(systeminfo|whoami|ipconfig|hostname)\.exe$</field>
+    <description>MITRE T1082 - System Information Discovery command executed</description>
+    <mitre>
+      <id>T1082</id>
+    </mitre>
+  </rule>
+</group>
+
+<!-- T1027 - Base64 Encoded Registry Value -->
+<group name="attack,defense_evasion,mitre_t1027,detection_engineering,">
+  <rule id="100007" level="14">
+    <if_sid>92041</if_sid>
+    <description>MITRE T1027 - Base64 encoded command in registry - defense evasion</description>
+    <mitre>
+      <id>T1027</id>
+    </mitre>
+  </rule>
+</group>
+
+<!-- T1003 - Credential Access - Executable in Malware Folder -->
+<group name="attack,credential_access,mitre_t1003,detection_engineering,">
+  <rule id="100005" level="15">
+    <if_sid>92213</if_sid>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(mimikatz|lsass|procdump|credential)</field>
+    <description>MITRE T1003 - Credential Dumping activity detected</description>
+    <mitre>
+      <id>T1003</id>
+    </mitre>
+  </rule>
+</group>

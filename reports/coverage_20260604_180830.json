@@ -1,0 +1,51 @@
+{
+  "run_timestamp": "2026-06-04T23:08:30.717544+00:00",
+  "summary": {
+    "total": 5,
+    "passed": 3,
+    "failed": 2,
+    "coverage_percent": 60.0
+  },
+  "results": [
+    {
+      "technique_id": "T1059.001",
+      "technique_name": "PowerShell Execution",
+      "tactic": "Execution",
+      "rule_id": "100004",
+      "status": "PASS",
+      "timestamp": "2026-06-04T23:08:22.568450+00:00"
+    },
+    {
+      "technique_id": "T1082",
+      "technique_name": "System Information Discovery",
+      "tactic": "Discovery",
+      "rule_id": "100006",
+      "status": "PASS",
+      "timestamp": "2026-06-04T23:08:24.602870+00:00"
+    },
+    {
+      "technique_id": "T1057",
+      "technique_name": "Process Discovery",
+      "tactic": "Discovery",
+      "rule_id": "100002",
+      "status": "FAIL",
+      "timestamp": "2026-06-04T23:08:26.628570+00:00"
+    },
+    {
+      "technique_id": "T1053.005",
+      "technique_name": "Scheduled Task Persistence",
+      "tactic": "Persistence",
+      "rule_id": "100003",
+      "status": "PASS",
+      "timestamp": "2026-06-04T23:08:28.686369+00:00"
+    },
+    {
+      "technique_id": "T1027",
+      "technique_name": "Base64 Defense Evasion",
+      "tactic": "Defense Evasion",
+      "rule_id": "100007",
+      "status": "FAIL",
+      "timestamp": "2026-06-04T23:08:30.717496+00:00"
+    }
+  ]
+}
