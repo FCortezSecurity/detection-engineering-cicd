@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Engineering CI/CD - Coverage Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0e1a;
+            color: #c9d1d9;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header {
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            background: #0d1117;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 1.8em;
+            color: #58a6ff;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .header .subtitle {
+            color: #8b949e;
+            font-size: 0.9em;
+        }
+        .coverage-ring {
+            margin: 30px auto;
+            width: 160px;
+            height: 160px;
+            position: relative;
+        }
+        .coverage-ring svg { transform: rotate(-90deg); }
+        .coverage-ring .percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 20px 0;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat .number {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .stat .label {
+            color: #8b949e;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+        .pass-num { color: #00ff88; }
+        .fail-num { color: #ff4444; }
+        .total-num { color: #58a6ff; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th {
+            background: #161b22;
+            color: #58a6ff;
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #30363d;
+        }
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #21262d;
+            font-size: 0.9em;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #161b22; }
+        .technique-id {
+            color: #ff7b72;
+            font-weight: bold;
+        }
+        .tactic {
+            background: #1f2937;
+            color: #93c5fd;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+        .rule-id {
+            color: #d2a8ff;
+            font-family: monospace;
+        }
+        .status {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+        .status.pass {
+            background: #0d2818;
+            color: #00ff88;
+            border: 1px solid #00ff88;
+        }
+        .status.fail {
+            background: #2d1018;
+            color: #ff4444;
+            border: 1px solid #ff4444;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #8b949e;
+            font-size: 0.8em;
+        }
+        .mitre-badge {
+            display: inline-block;
+            background: #1a1f2e;
+            border: 1px solid #58a6ff;
+            color: #58a6ff;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ DETECTION ENGINEERING CI/CD</h1>
+            <p class="subtitle">ATT&CK Coverage Validation Report</p>
+            <p class="subtitle">Generated: 2026-06-04T23:39:12.387474+00:00</p>
+
+            <div class="coverage-ring">
+                <svg width="160" height="160" viewBox="0 0 160 160">
+                    <circle cx="80" cy="80" r="70"
+                        fill="none" stroke="#21262d" stroke-width="12"/>
+                    <circle cx="80" cy="80" r="70"
+                        fill="none" stroke="#00ff88" stroke-width="12"
+                        stroke-dasharray="439.8 439.8"
+                        stroke-linecap="round"/>
+                </svg>
+                <div class="percentage">100%</div>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="number total-num">5</div>
+                    <div class="label">Total</div>
+                </div>
+                <div class="stat">
+                    <div class="number pass-num">5</div>
+                    <div class="label">Passed</div>
+                </div>
+                <div class="stat">
+                    <div class="number fail-num">0</div>
+                    <div class="label">Failed</div>
+                </div>
+            </div>
+
+            <div>
+                <span class="mitre-badge">T1057 Discovery</span>
+                <span class="mitre-badge">T1059.001 Execution</span>
+                <span class="mitre-badge">T1082 Discovery</span>
+                <span class="mitre-badge">T1053.005 Persistence</span>
+                <span class="mitre-badge">T1027 Defense Evasion</span>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Technique ID</th>
+                    <th>Technique Name</th>
+                    <th>Tactic</th>
+                    <th>Rule ID</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+        <tr>
+            <td><span class="technique-id">T1059.001</span></td>
+            <td>PowerShell Execution</td>
+            <td><span class="tactic">Execution</span></td>
+            <td><span class="rule-id">#100004</span></td>
+            <td><span class="status pass">✓ PASS</span></td>
+        </tr>
+        <tr>
+            <td><span class="technique-id">T1082</span></td>
+            <td>System Information Discovery</td>
+            <td><span class="tactic">Discovery</span></td>
+            <td><span class="rule-id">#100006</span></td>
+            <td><span class="status pass">✓ PASS</span></td>
+        </tr>
+        <tr>
+            <td><span class="technique-id">T1057</span></td>
+            <td>Process Discovery</td>
+            <td><span class="tactic">Discovery</span></td>
+            <td><span class="rule-id">#100002</span></td>
+            <td><span class="status pass">✓ PASS</span></td>
+        </tr>
+        <tr>
+            <td><span class="technique-id">T1053.005</span></td>
+            <td>Scheduled Task Persistence</td>
+            <td><span class="tactic">Persistence</span></td>
+            <td><span class="rule-id">#100003</span></td>
+            <td><span class="status pass">✓ PASS</span></td>
+        </tr>
+        <tr>
+            <td><span class="technique-id">T1027</span></td>
+            <td>Base64 Defense Evasion</td>
+            <td><span class="tactic">Defense Evasion</span></td>
+            <td><span class="rule-id">#100007</span></td>
+            <td><span class="status pass">✓ PASS</span></td>
+        </tr>
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <p>Detection Engineering CI/CD Platform | Wazuh + Sysmon + Atomic Red Team</p>
+            <p>MITRE ATT&CK Framework | Windows 11 Target | Custom Detection Rules</p>
+        </div>
+    </div>
+</body>
+</html>
