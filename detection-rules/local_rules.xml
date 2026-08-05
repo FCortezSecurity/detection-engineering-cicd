@@ -83,3 +83,58 @@
     </mitre>
   </rule>
 </group>
+<group name="kubernetes,k8s_attack_path,">
+
+  <rule id="100100" level="0">
+    <regex type="pcre2">(?=.*"kind":"Event")(?=.*audit\.k8s\.io)</regex>
+    <description>Kubernetes API audit event</description>
+  </rule>
+
+  <rule id="100101" level="12">
+    <if_sid>100100</if_sid>
+    <regex type="pcre2">(?=.*"verb":"create")(?=.*"resource":"pods")(?=.*"privileged":true)</regex>
+    <description>Kubernetes: privileged container created -- possible node escape</description>
+    <mitre>
+      <id>T1611</id>
+    </mitre>
+  </rule>
+
+  <rule id="100102" level="10">
+    <if_sid>100100</if_sid>
+    <regex type="pcre2">(?=.*"verb":"create")(?=.*"resource":"pods")(?=.*"hostPath")</regex>
+    <description>Kubernetes: pod created with hostPath volume mount -- possible container escape</description>
+    <mitre>
+      <id>T1611</id>
+    </mitre>
+  </rule>
+
+  <rule id="100103" level="15">
+    <if_sid>100100</if_sid>
+    <regex type="pcre2">(?=.*"resource":"clusterrolebindings")(?=.*"verb":"create")(?=.*cluster-admin)</regex>
+    <description>Kubernetes: new ClusterRoleBinding grants cluster-admin -- critical privilege escalation</description>
+    <mitre>
+      <id>T1078.002</id>
+    </mitre>
+  </rule>
+
+  <rule id="100104" level="7">
+    <if_sid>100100</if_sid>
+    <regex type="pcre2">"resource":"secrets"</regex>
+    <regex type="pcre2">"verb":"(get|list)"</regex>
+    <regex type="pcre2">serviceaccount:</regex>
+    <regex type="pcre2" negate="yes">kube-system</regex>
+    <description>Kubernetes: ServiceAccount read a Secret outside kube-system -- possible credential exposure</description>
+    <mitre>
+      <id>T1552.007</id>
+    </mitre>
+  </rule>
+
+  <rule id="100105" level="13" frequency="2" timeframe="120">
+    <if_matched_sid>100101</if_matched_sid>
+    <description>Kubernetes: repeated privileged pod creation -- possible automated exploitation</description>
+    <mitre>
+      <id>T1611</id>
+    </mitre>
+  </rule>
+
+</group>
