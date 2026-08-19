@@ -13,6 +13,14 @@ Most detection engineering work happens in silos — someone writes a rule, depl
 
 This mirrors how mature security teams at enterprise organizations validate their detection content — the difference is this was built from scratch as a solo project, and now spans both Windows endpoint telemetry and Kubernetes audit logs.
 
+## Why I Built This
+
+Writing a Wazuh rule is the easy part. The harder, less-talked-about problem is that detection content silently rots: an attacker's tooling changes, a Windows update shifts which event IDs get logged, or a rule's `if_sid` chain was subtly wrong from day one — and nobody notices until an incident makes it obvious the "coverage" was never really there. Most portfolio projects show a rule firing once, in a screenshot, and stop.
+
+I wanted to build the piece that actually matters to a SOC: proof that a rule works today, and a way to know immediately if it stops working tomorrow. That's why this isn't just a rule set — it's a pipeline that simulates the real ATT&CK technique with Atomic Red Team, checks the Wazuh indexer for the expected alert, and scores it PASS/FAIL automatically. If a rule breaks after a Wazuh upgrade, a Sysmon config change, or an OS update, this pipeline catches it the same way a broken unit test catches a code regression — instead of waiting for a real intrusion to expose the gap.
+
+Extending it to Kubernetes audit logs later was a deliberate choice too, not scope creep. Attack surface in most real environments now includes the orchestration layer, not just the endpoint, and I wanted the same validation discipline — real technique, real telemetry, real PASS/FAIL — applied there rather than treating cloud-native detection as a separate, less-rigorous afterthought.
+
 ## Architecture
 
 ```
